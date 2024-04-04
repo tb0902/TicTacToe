@@ -6,90 +6,93 @@ package rocks.zipcodewilmington.tictactoe;
 public class Board {
 
     Character[][] matrix;
+
     public Board(Character[][] matrix) {
         this.matrix = matrix;
     }
 
     public Boolean isInFavorOfX() {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-
-            }
-        }
-
-
-
-
-
-
-
-
-
-//        int xCounter = 0;
-//        int oCounter = 0;
-//        for (int i = 0; i < matrix.length; i++) {
-//            for (int j = 0; j < matrix[i].length; j++) {
-//
-//                if (matrix[j].equals('X')) {
-//                    xCounter++;
-//                } else {
-//                    oCounter++;
-//                }
-//
-//                }
-//            }
-//        if (xCounter > oCounter) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-    }
-    public Boolean isInFavorOfO() {
-        int xCounter = 0;
-        int oCounter = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-
-                if (matrix[j].equals('O')) {
-                    oCounter++;
-                } else {
-                    xCounter++;
+        // check rows
+        for (int i = 0; i < 3; i++) {
+            int rowCounter = 0;
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] == 'X') {
+                    rowCounter++;
                 }
-
             }
+            if (rowCounter == 3) return true;
         }
-        if (oCounter > xCounter) {
-            return true;
-        } else {
-            return false;
+
+        // checking columns
+        for (int i = 0; i < 3; i++) {
+            int columnCounter = 0;
+            for (int j = 0; j < 3; j++) {
+                if (matrix[j][i] == 'X') {
+                    columnCounter++;
+                }
+            }
+            if (columnCounter == 3) return true;
         }
+
+        if (matrix[0][0] == matrix[1][1] && matrix[2][2] == 'X') return true;// forward slash)
+
+        if (matrix[0][2] == matrix[1][1] && matrix[2][0] == 'X') return true; // back slash
+
+        return false;
     }
 
+    public Boolean isInFavorOfO() {
+        // check rows
+        for (int i = 0; i < 3; i++) {
+            int rowCounter = 0;
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] == 'O') {
+                    rowCounter++;
+                }
+            }
+            if (rowCounter == 3) return true;
+        }
+
+        // checking columns
+        for (int i = 0; i < 3; i++) {
+            int columnCounter = 0;
+            for (int j = 0; j < 3; j++) {
+                if (matrix[j][i] == 'O') {
+                    columnCounter++;
+                }
+            }
+            if (columnCounter == 3) return true;
+        }
+
+        if (matrix[0][0] == matrix[1][1] && matrix[2][2] == 'O') return true;// forward slash)
+
+        if (matrix[0][2] == matrix[1][1] && matrix[2][0] == 'O') return true; // back slash
+
+        return false;
+    }
 
     public Boolean isTie() {
-        int xCounter = 0;
-        int oCounter = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
+        boolean isTie = false;
 
-                if (matrix[j].equals('X')) {
-                    xCounter++;
-                } else {
-                    oCounter++;
-                }
+        if (!isInFavorOfO() && !isInFavorOfX()) {
+            isTie = true;
 
-            }
         }
-        if (xCounter == oCounter) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
+        return isTie;
+    }
 
     public String getWinner() {
-        return null;
+        String Xwinner = "X";
+        String Owinner = "O";
+        if (isInFavorOfO()) {
+            return Owinner;
+        }
+
+        if (isInFavorOfX()) {
+            return Xwinner;
+        }
+
+        return "" ;
     }
 
 }
